@@ -85,11 +85,11 @@ int move(int te, int depth, int pa_cnt) // 勝ちの手番を返す。自分以�
     pa[i] = p;
     if( depth <= 3 ) printf("ret=%d\n", ret);
     if( ret == te ) return te; // 自分の勝ちならその手でよい
-    if( max == 0 ) continue;
-    if( ret == 0 ) { max = 0; continue; }
-    if( max == -1 ) continue;
-    if( max == -2 ) { max = ret; continue; }
-    if( ret != max ) { max = -1; continue; }
+    if( max == 0 ) continue;//その局面でteの打てる手に勝ちがなく引き分けがあればmaxは0(引き分け)となる
+    if( ret == 0 ) { max = 0; continue; }//引き分け
+    if( max == -1 ) continue;//その局面でte以外のどちらか二人が勝つことがteにとって最善の状態であればmaxは-1 //ret == 0か ret == teになる手を探す
+    if( max == -2 ) { max = ret; continue; }//勝でも引き分けでもなければte以外の買ったプレイヤーの番号をmaxに代入
+    if( ret != max ) { max = -1; continue; }//maxが0でも-1でも-2でもなく、retがteでも0でもない場合その手はte以外のどちらか二人が勝つ-1(不定の負け)
   }
   return max;
 }
